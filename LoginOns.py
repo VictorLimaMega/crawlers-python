@@ -1,24 +1,13 @@
 import asyncio
 from pyppeteer.launcher import launch
+from getAuth import getCookieOns
 
 async def getLastNews():
 	browser = await launch(args=["--no-sandbox"])
 	page = await browser.newPage()
-	await page.goto("https://sintegre.ons.org.br")
-	await loginOns(page)
+	await getCookieOns(page)
 	await redirectNoticias(page)
 	await browser.close()
-
-async def loginOns(page):
-	await page.screenshot({'path': "sintegre_inicial.png"})
-	await page.type("#username", "precos@megawhat.energy")
-	await page.click('[name="submit.IdentificarUsuario"]')
-	await page.waitForNavigation()
-	await page.screenshot({'path': "sintegre_pos_user.png"})
-	await page.type("#password", "SintegrandoComMega473$")
-	await page.click('[name="submit.Signin"]')
-	await page.waitFor(10000)
-	await page.screenshot({'path': "sintegre_pos_senha.png"})
 
 async def redirectNoticias(page):
 	await page.goto("https://sintegre.ons.org.br/Paginas/servicos/noticias.aspx")
@@ -33,3 +22,5 @@ async def redirectNoticias(page):
 
 def main(): 
 	asyncio.get_event_loop().run_until_complete(getLastNews())
+
+main()

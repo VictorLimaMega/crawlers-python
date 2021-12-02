@@ -19,4 +19,4 @@ async def getOnsAuthCookie(page):
 	cookies = await page.cookies()
 	for cookie in cookies:
 		if cookie["name"] == "FedAuth":
-			return cookie
+			return {"FedAuth": cookie["value"]}
